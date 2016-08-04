@@ -3,12 +3,6 @@ use warnings;
 
 use Test::More;
 
-BEGIN {
-    require Dancer; 
-    plan skip_all => 'Dancer 1 tests'
-        if Dancer->VERSION >= 2;
-}
-
 plan tests => 1;
 
 use lib 't/apps/Foo/lib';
