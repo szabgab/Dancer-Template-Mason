@@ -23,7 +23,8 @@ has _engine => (
     default => sub {
         my %config = %{$_[0]->config || {}};
 
-        delete $config{$_} for qw/ environment location extension /;
+        delete @config{qw/ environment location extension /};
+
         HTML::Mason::Interp->new( %config );
     },
 );
