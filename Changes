@@ -11,6 +11,10 @@ Revision history for Dancer-Template-Mason
 
  [NEW FEATURES]
 
+ [MAINTENANCE]
+ - Minor refactoring.
+ - Move testing to Test2.
+
  [STATISTICS]
 
 0.004001 2014-08-16
