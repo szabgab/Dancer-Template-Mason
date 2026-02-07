@@ -13,6 +13,8 @@ use Moo;
 require FindBin;
 require Dancer::Config;
 
+use experimental qw/ signatures /;
+
 Dancer::Config->import( 'setting' );
 
 extends 'Dancer::Template::Abstract';
@@ -20,8 +22,8 @@ extends 'Dancer::Template::Abstract';
 has _engine => (
     is => 'ro',
     lazy => 1,
-    default => sub {
-        my %config = %{$_[0]->config || {}};
+    default => sub($self) {
+        my %config = %{$self->config || {}};
 
         delete @config{qw/ environment location extension /};
 
@@ -32,27 +34,26 @@ has _engine => (
 has _root_dir => (
     is => 'rw',
     lazy => 1,
-    default => sub {
-        $_[0]->config->{comp_root} ||= 
+    default => sub($self) {
+        $self->config->{comp_root} ||= 
             setting( 'views' ) || $FindBin::Bin . '/views';
     },
 );
 
-sub _build_name { 'Dancer::Template::Mason' }
+sub _build_name { __PACKAGE__ }
 
 has default_tmpl_ext => (
     is => 'ro',
     lazy => 1,
-    default => sub {
-        $_[0]->config->{extension} || 'mason';
+    default => sub($self) {
+        $self->config->{extension} || 'mason';
     },
 );
 
-sub render {
-    my ($self, $template, $tokens) = @_;
+sub render($self, $template, $tokens) {
 
     my $root_dir = $self->_root_dir;
-    
+
     $template =~ s/^\Q$root_dir//;  # cut the leading path
 
     my $content;

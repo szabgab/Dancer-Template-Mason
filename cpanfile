@@ -5,6 +5,7 @@ requires "Dancer" => "0";
 requires "FindBin" => "0";
 requires "HTML::Mason::Interp" => "0";
 requires "Moo" => "0";
+requires "experimental" => "0";
 requires "strict" => "0";
 requires "warnings" => "0";
 
