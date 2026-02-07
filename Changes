@@ -1,21 +1,20 @@
 Revision history for Dancer-Template-Mason
 
 {{$NEXT}}
- [API CHANGES]
+ - API CHANGES
+ - NEW FEATURES
+ - ENHANCEMENTS
+ - BUG FIXES
+ - DOCUMENTATION
+ - STATISTICS
 
- [BUG FIXES]
-
- [DOCUMENTATION]
-
- [ENHANCEMENTS]
-
- [NEW FEATURES]
-
+0.004002 2026-02-07
  [MAINTENANCE]
  - Minor refactoring.
  - Move testing to Test2.
 
  [STATISTICS]
+ - code churn: 12 files changed, 295 insertions(+), 80 deletions(-)
 
 0.004001 2014-08-16
  [MISC]
@@ -70,4 +69,3 @@ Revision history for Dancer-Template-Mason
 0.000_001 2010-02-18
  - original version unleashed on an unsuspecting world (heavily based on
    Dancer::Template::Haml)
-
