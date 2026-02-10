@@ -1,0 +1,53 @@
+name: CI
+
+on:
+    push:
+    pull_request:
+    workflow_dispatch:
+    #schedule:
+    #    - cron: '42 5 * * 0'
+
+jobs:
+  perl-job:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        perl-version:
+#          - '5.8'
+#          - '5.30'
+          - '5.42'
+#          - 'latest'
+    container:
+      image: perldocker/perl-tester:${{ matrix.perl-version }}     # https://hub.docker.com/r/perldocker/perl-tester
+    name: Perl ${{ matrix.perl-version }}
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Show Perl version
+        run: |
+          perl -V
+
+      - name: Install authordeps
+        run: |
+          dzil authordeps --missing | cpanm --notest
+          cpanm --notest Dist::Zilla::Plugin::ContributorCovenant
+          cpanm --notest Dist::Zilla::Plugin::SecurityPolicy
+          cpanm --notest Software::Security::Policy::Individual
+
+      - name: Install more dependencies with cpanm
+        run: |
+          cpanm --installdeps --notest .
+
+      - name: Install missing dependencies
+        run: |
+          dzil listdeps --author --missing | cpanm --notest
+
+      - name: Configure git to make dzil happy
+        run: |
+          git config --global user.email "you@example.com"
+          git config --global user.name "Your Name"
+
+      - name: Run the tests
+        run: |
+           dzil test --author --release
